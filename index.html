@@ -14,7 +14,7 @@
     <script>
         async function sendMessage() {
             let userMessage = document.getElementById("userInput").value;
-            let apiUrl = "https://1nl2w6kpcl.execute-api.us-east-1.amazonaws.com/prod";  // Replace with your API Gateway URL
+            let apiUrl = "https://your-api-id.execute-api.region.amazonaws.com/prod/";  // Replace with your API Gateway URL
 
             let response = await fetch(apiUrl + "?query=" + encodeURIComponent(userMessage));
             let data = await response.json();
