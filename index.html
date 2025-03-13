@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NGO Donation Chatbot</title>
+    <title>NGO Chatbot</title>
 </head>
 <body>
-    <h2>NGO Donation Chatbot</h2>
-    <textarea id="userInput" placeholder="Ask me about donations..."></textarea>
-    <button onclick="sendMessage()">Send</button>
-    <p id="response"></p>
+    <h2>Ask the NGO Chatbot</h2>
+    <input type="text" id="chatInput" placeholder="Type your question...">
+    <button onclick="getChatResponse()">Ask</button>
+    <p id="chatOutput"></p>
 
     <script>
-        async function sendMessage() {
-            let userMessage = document.getElementById("userInput").value;
-            let apiUrl = "https://fa3mknqgzg.execute-api.us-east-1.amazonaws.com/prod";  // Replace with your API Gateway URL
-
-            let response = await fetch(apiUrl + "?query=" + encodeURIComponent(userMessage));
+        async function getChatResponse() {
+            let userQuery = document.getElementById("chatInput").value;
+            let response = await fetch(`https://your-api-gateway-id.execute-api.region.amazonaws.com/prod/query?query=${encodeURIComponent(userQuery)}`);
             let data = await response.json();
-
-            document.getElementById("response").innerText = "Chatbot: " + data.response;
+            document.getElementById("chatOutput").innerText = data.response;
         }
     </script>
 </body>
