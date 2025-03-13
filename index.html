@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NGO Chatbot</title>
 </head>
 <body>
-    <h2>Ask the NGO Chatbot</h2>
-    <input type="text" id="chatInput" placeholder="Type your question...">
-    <button onclick="getChatResponse()">Ask</button>
+    <h2>NGO Chatbot</h2>
+    <input type="text" id="chatInput" placeholder="Ask a question...">
+    <button onclick="getChatResponse()">Send</button>
     <p id="chatOutput"></p>
 
     <script>
         async function getChatResponse() {
             let userQuery = document.getElementById("chatInput").value;
-            let response = await fetch(`https://your-api-gateway-id.execute-api.region.amazonaws.com/prod/query?query=${encodeURIComponent(userQuery)}`);
-            let data = await response.json();
-            document.getElementById("chatOutput").innerText = data.response;
+            let apiUrl = "https://f0qh8qvnfa.execute-api.us-east-1.amazonaws.com/dev/query?query=" + encodeURIComponent(userQuery);
+
+            try {
+                let response = await fetch(apiUrl, { method: "GET" });
+                let data = await response.json();
+                document.getElementById("chatOutput").innerText = data.response;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("chatOutput").innerText = "Error fetching response.";
+            }
         }
     </script>
 </body>
