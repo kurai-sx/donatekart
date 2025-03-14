@@ -16,17 +16,28 @@
         let query = document.getElementById("query").value;
         let responseBox = document.getElementById("response");
 
-        let apiUrl = `https://rmc2f3m1rc.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=${encodeURIComponent(query)}`;
+        if (!query) {
+            responseBox.innerText = "Please enter a query!";
+            return;
+        }
 
-        let response = await fetch(apiUrl, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
-        });
+        let apiUrl = `https://gec90mxpz4.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=${encodeURIComponent(query)}`;
 
-        let data = await response.json();
-        responseBox.innerText = data.response;
+        try {
+            let response = await fetch(apiUrl, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            let data = await response.json();
+            responseBox.innerText = data.response || "No response from API.";
+        } catch (error) {
+            console.error("Error fetching API:", error);
+            responseBox.innerText = "Failed to fetch response.";
+        }
     }
 </script>
+
 
 </body>
 </html>
