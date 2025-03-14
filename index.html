@@ -12,19 +12,21 @@
     <p id="response"></p>
 
     <script>
-        async function sendQuery() {
-            let query = document.getElementById("query").value;
-            let responseBox = document.getElementById("response");
+    async function sendQuery() {
+        let query = document.getElementById("query").value;
+        let responseBox = document.getElementById("response");
 
-            let response = await fetch("https://rmc2f3m1rc.execute-api.us-east-1.amazonaws.com/prod/chatbot", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query: query })
-            });
+        let apiUrl = `https://rmc2f3m1rc.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=${encodeURIComponent(query)}`;
 
-            let data = await response.json();
-            responseBox.innerText = data.response;
-        }
-    </script>
+        let response = await fetch(apiUrl, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        let data = await response.json();
+        responseBox.innerText = data.response;
+    }
+</script>
+
 </body>
 </html>
