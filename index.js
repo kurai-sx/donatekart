@@ -1,21 +1,24 @@
-async function sendMessage() {
-    let userQuery = document.getElementById("user-input").value;
-    let apiUrl = "https://qfk01zsu87.execute-api.us-east-1.amazonaws.com/prod/query?query=" + encodeURIComponent(userQuery);
+async function sendQuery() {
+    const query = document.getElementById("queryInput").value;
+    const API_URL = "https://gec90mxpz4.execute-api.us-east-1.amazonaws.com/prod/chatbot";
 
     try {
-        let response = await fetch(apiUrl, { 
-            method: "GET", 
-            headers: { "Content-Type": "application/json" } 
+        const response = await fetch(`${API_URL}?query=${encodeURIComponent(query)}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`API error: ${response.statusText}`);
         }
 
-        let data = await response.json();
-        document.getElementById("response").innerText = data.response || "No response received";
+        const data = await response.json();
+        console.log("API Response:", data);
+        document.getElementById("responseOutput").innerText = data.response || "No response from chatbot.";
     } catch (error) {
-        console.error("Error fetching response:", error);
-        document.getElementById("response").innerText = "Error fetching response.";
+        console.error("Error fetching API:", error);
+        document.getElementById("responseOutput").innerText = "Error: Could not reach API.";
     }
 }
