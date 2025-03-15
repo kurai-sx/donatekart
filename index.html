@@ -3,41 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NGO Chatbot</title>
+    <title>Simple Chatbot</title>
 </head>
 <body>
-    <h2>Ask the NGO Chatbot</h2>
-    <input type="text" id="query" placeholder="Type your question..." />
+    <h2>Ask the Chatbot</h2>
+    <input type="text" id="query" placeholder="Type your question">
     <button onclick="sendQuery()">Ask</button>
     <p id="response"></p>
 
-<script>
-    async function sendQuery() {
-        let query = document.getElementById("query").value;
-        let responseBox = document.getElementById("response");
+    <script>
+        async function sendQuery() {
+            let queryText = document.getElementById("query").value;
+            let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
 
-        if (!query) {
-            responseBox.innerText = "Please enter a query!";
-            return;
+            try {
+                let response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                let data = await response.json();
+                document.getElementById("response").innerText = data.body;
+            } catch (error) {
+                document.getElementById("response").innerText = "Error fetching API: " + error;
+            }
         }
-
-        let apiUrl = `https://gec90mxpz4.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=${encodeURIComponent(query)}`;
-
-        try {
-            let response = await fetch(apiUrl, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            });
-
-            let data = await response.json();
-            responseBox.innerText = data.response || "No response from API.";
-        } catch (error) {
-            console.error("Error fetching API:", error);
-            responseBox.innerText = "Failed to fetch response.";
-        }
-    }
-</script>
-
-
+    </script>
 </body>
 </html>
