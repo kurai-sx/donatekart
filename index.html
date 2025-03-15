@@ -13,22 +13,25 @@
 
     <script>
         async function sendQuery() {
-            let queryText = document.getElementById("query").value;
-            let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
+    let queryText = document.getElementById("query").value;
+    let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
 
-            try {
-                let response = await fetch(apiUrl, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
-                let data = await response.json();
-                document.getElementById("response").innerText = data.body;
-            } catch (error) {
-                document.getElementById("response").innerText = "Error fetching API: " + error;
-            }
-        }
+    try {
+        let response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            mode: "cors"  // Add this
+        });
+
+        let data = await response.json();
+        document.getElementById("response").innerText = data.body;
+    } catch (error) {
+        document.getElementById("response").innerText = "Error fetching API: " + error;
+    }
+}
+
     </script>
 </body>
 </html>
