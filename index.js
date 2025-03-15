@@ -1,24 +1,34 @@
-async function sendQuery() {
-    const query = document.getElementById("queryInput").value;
-    const API_URL = "https://gec90mxpz4.execute-api.us-east-1.amazonaws.com/prod/chatbot";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+</head>
+<body>
+    <h2>Ask the Chatbot</h2>
+    <input type="text" id="query" placeholder="Type your question">
+    <button onclick="sendQuery()">Ask</button>
+    <p id="response"></p>
 
-    try {
-        const response = await fetch(`${API_URL}?query=${encodeURIComponent(query)}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
+    <script>
+        async function sendQuery() {
+            let queryText = document.getElementById("query").value;
+            let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
+
+            try {
+                let response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                let data = await response.json();
+                document.getElementById("response").innerText = data.body;
+            } catch (error) {
+                document.getElementById("response").innerText = "Error fetching API: " + error;
             }
-        });
-
-        if (!response.ok) {
-            throw new Error(`API error: ${response.statusText}`);
         }
-
-        const data = await response.json();
-        console.log("API Response:", data);
-        document.getElementById("responseOutput").innerText = data.response || "No response from chatbot.";
-    } catch (error) {
-        console.error("Error fetching API:", error);
-        document.getElementById("responseOutput").innerText = "Error: Could not reach API.";
-    }
-}
+    </script>
+</body>
+</html>
