@@ -11,7 +11,7 @@
     <script>
         async function askChatbot() {
             let query = document.getElementById("query").value;
-            let response = await fetch("https://your-api-id.execute-api.your-region.amazonaws.com/prod/chatbot", {
+            let response = await fetch("https://ytvo4ztpo7.execute-api.us-east-1.amazonaws.com/prod/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ query: query })
