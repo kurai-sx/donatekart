@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chatbot</title>
+    <title>NGO Chatbot</title>
 </head>
 <body>
-    <h2>Anything you would like to ask the Chatbot</h2>
-    <input type="text" id="query" placeholder="Type your question">
-    <button onclick="sendQuery()">Ask</button>
+    <input type="text" id="query" placeholder="Ask me anything...">
+    <button onclick="askChatbot()">Ask</button>
     <p id="response"></p>
 
     <script>
-        async function sendQuery() {
-    let queryText = document.getElementById("query").value;
-    let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
-
-    try {
-        let response = await fetch(apiUrl, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            mode: "cors"  // Add this
-        });
-
-        let data = await response.json();
-        document.getElementById("response").innerText = data.body;
-    } catch (error) {
-        document.getElementById("response").innerText = "Error fetching API: " + error;
-    }
-}
-
+        async function askChatbot() {
+            let query = document.getElementById("query").value;
+            let response = await fetch("https://your-api-id.execute-api.your-region.amazonaws.com/prod/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: query })
+            });
+            let data = await response.json();
+            document.getElementById("response").innerText = data.response;
+        }
     </script>
 </body>
 </html>
