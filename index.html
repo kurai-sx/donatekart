@@ -1,24 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>NGO Chatbot</title>
-</head>
-<body>
-    <input type="text" id="query" placeholder="Ask me anything...">
-    <button onclick="askChatbot()">Ask</button>
-    <p id="response"></p>
+async function askChatbot() {
+    const userInput = document.getElementById("userInput").value;
 
-    <script>
-        async function askChatbot() {
-            let query = document.getElementById("query").value;
-            let response = await fetch("https://ytvo4ztpo7.execute-api.us-east-1.amazonaws.com/prod/chatbot", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query: query })
-            });
-            let data = await response.json();
-            document.getElementById("response").innerText = data.response;
-        }
-    </script>
-</body>
-</html>
+    const response = await fetch("https://ytvo4ztpo7.execute-api.us-east-1.amazonaws.com/prod/chatbot", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: userInput })
+    });
+
+    const data = await response.json();
+    console.log("API Response:", data);
+
+    // Ensure response exists before accessing it
+    if (data.response) {
+        document.getElementById("chatbotResponse").innerText = data.response;
+    } else {
+        document.getElementById("chatbotResponse").innerText = "No response received.";
+    }
+}
