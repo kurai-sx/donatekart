@@ -14,7 +14,7 @@
     <script>
         async function sendQuery() {
             let queryText = document.getElementById("query").value;
-            let apiUrl = "https://ylmbl31dw9.execute-api.us-east-1.amazonaws.com/prod/chatbot?query=" + encodeURIComponent(queryText);
+            let apiUrl = "https://0admnncyul.execute-api.us-east-1.amazonaws.com/default?query=" + encodeURIComponent(queryText);
 
             try {
                 let response = await fetch(apiUrl, {
